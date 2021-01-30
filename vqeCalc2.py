@@ -37,24 +37,37 @@ coeff=paulidecompos(Matriz)
 def Eigenvals():
     return np.linalg.eigvals(np.array(Matriz).astype(np.float64))
 
-def ansatz(circuit, theta):
+def ansatz(circuit, theta,ansatzList):
     q = circuit.qregs[0]
-    print('Select your first gate')
-    gate=input()
-    if gate=='H':
-        circuit.h(q[0])
-    circuit.h(q[0])
-    circuit.cx(q[0], q[1])
-    circuit.rx(theta, q[0])
+    for gate in ansatzList:
+        if gate[0]=='H':
+            p=int(gate[1])
+            circuit.h(q[p])
+        if gate[0]=='C':
+            p0=int(gate[1])
+            p1=int(gate[2])
+            circuit.cx(q[p0], q[p1])
+        if gate[0]=='R':
+            p=int(gate[1])
+            circuit.rx(theta, q[p])
+        if gate[0]=='Y':
+            p=int(gate[1])
+            circuit.rx(theta, q[p])
+        if gate[0]=='Z':
+            p=int(gate[1])
+            circuit.rx(theta, q[p])
+        if gate[0]=='X':
+            p=int(gate[1])
+            circuit.rx(theta, q[p])
     return circuit
 
-def two_qubit_vqe(theta, basis):
+def two_qubit_vqe(theta, basis,ansatzList):
     q = QuantumRegister(2)
     c = ClassicalRegister(2)
     circuit = QuantumCircuit(q, c)
 
     # implement the ansate in the circuit
-    circuit = ansatz(circuit, theta)
+    circuit = ansatz(circuit, theta,ansatzList)
     # measurement
     if basis == 'Z':
         circuit.measure(q, c)
@@ -73,16 +86,16 @@ def two_qubit_vqe(theta, basis):
 
     return circuit
 
-def get_expectation(theta, basis):
+def get_expectation(theta, basis,ansatzList):
     
     if basis == 'I':
         return 1
     elif basis == 'Z':
-        circuit = two_qubit_vqe(theta, 'Z')
+        circuit = two_qubit_vqe(theta, 'Z',ansatzList)
     elif basis == 'X':
-        circuit = two_qubit_vqe(theta, 'X')
+        circuit = two_qubit_vqe(theta, 'X',ansatzList)
     elif basis == 'Y':
-        circuit = two_qubit_vqe(theta, 'Y')
+        circuit = two_qubit_vqe(theta, 'Y',ansatzList)
     else:
         raise ValueError('Not a valid pauli basis, input should be I,X,Y or Z')
     
@@ -104,12 +117,12 @@ def get_expectation(theta, basis):
     return expected_value
 
 
-def vqe_ground(theta):
+def vqe_ground(theta,ansatzList):
         
-    ground_I = coeff['II']*get_expectation(theta, 'I')
-    ground_Z = coeff['ZZ']*get_expectation(theta, 'Z')
-    ground_X = coeff['XX']*get_expectation(theta, 'X')
-    ground_Y = coeff['YY']*get_expectation(theta, 'Y')
+    ground_I = coeff['II']*get_expectation(theta, 'I',ansatzList)
+    ground_Z = coeff['ZZ']*get_expectation(theta, 'Z',ansatzList)
+    ground_X = coeff['XX']*get_expectation(theta, 'X',ansatzList)
+    ground_Y = coeff['YY']*get_expectation(theta, 'Y',ansatzList)
     
     # summing the measurement results
     sum_ = ground_I+ground_Z+ground_X+ground_Y
