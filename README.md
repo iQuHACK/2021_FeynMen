@@ -1,5 +1,11 @@
-# Welcome to iQuHACK 2021!
-Check out some info in the [event's repository](https://github.com/iQuHACK/2021) to get started.
+# QTnder: The Quantum version of your favorite dates app
+
+## Abstract
+Dating Sim App using quantum principles (VQE) for matching/unmatching Quantum Computing Engineers/Scientists.
+
+## Introduction
+
+## Motivation/goals
 
 Having a README in your team's repository facilitates judging. A good README contains:
 * a clear title for your project,
