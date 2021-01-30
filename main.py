@@ -1,3 +1,4 @@
+import time
 import pygame
 
 display_width = 765
@@ -191,6 +192,7 @@ starting_screen()
 choice=[]
 while True:
     gate_chosen=gate_choose()
+    time.sleep(0.5)
     if gate_chosen=='CNOT01':
         choice.append(gate_chosen)
         print(choice)
@@ -198,6 +200,7 @@ while True:
     if gate_chosen=='DONE':
         break
     qubit_chosen=qubit_choose()
+    time.sleep(0.5)
     choice.append(gate_chosen+qubit_chosen)
     print(choice)
 
