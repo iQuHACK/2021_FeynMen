@@ -1,4 +1,4 @@
-# QTnder: The Quantum version of your favorite dates app
+# QTinder: The Quantum version of your favorite dates app
 
 ## Abstract
 Dating Sim App using quantum principles (VQE) for matching/unmatching Quantum Computing Engineers/Scientists.
