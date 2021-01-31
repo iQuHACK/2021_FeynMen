@@ -580,18 +580,19 @@ while True:
                 value = comparison(choice, matriz, coeff)
                 if value:
                     profile_att.append("1")
-                    flag += 1
                     #continueornot = match_screen()
                     #time.sleep(0.5)
                     #break
                     #continue
                 else:
                     profile_att.append("0")
-                    flag += 1
                     #continueornot = match_screen()
                     #time.sleep(0.5)
                     #break
                     #continue
+                flag += 1
+                circuit = QuantumCircuit(2, 2)
+                circuit.barrier()
                 if flag == 4:
                     break
             time.sleep(0.5)
