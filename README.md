@@ -1,4 +1,4 @@
-# QMatch: The Quantum version of your favorite dates app
+# QMatch: The Quantum version of your favorite dating app
 (Anyone who is available please sketch out this README!)
 
 ## Abstract
