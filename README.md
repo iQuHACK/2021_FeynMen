@@ -23,4 +23,4 @@ Our goal is to introduce users to the VQE algorithm by letting them propose simp
  * Implement the game with better graphics.
  * Use real profiles by multiple users that play the game (databases).
  * Introduce a swiping mechanic.
- 
+ * Adding parametrized games to implement an easier mode
