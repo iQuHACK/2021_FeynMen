@@ -1,5 +1,5 @@
 # QTinder: The Quantum version of your favorite dates app
-(Anyone who is available please sketch out this read me!)
+(Anyone who is available please sketch out this README!)
 ## Abstract
 Dating Sim App using quantum principles (VQE) for matching/unmatching Quantum Computing Engineers/Scientists.
 
