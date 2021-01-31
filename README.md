@@ -11,7 +11,7 @@ In this project, we propose a Dating Matching App where each of the questions as
 
 
 ## Motivation/goals
-Our motivation was to give a "quantum spin" to an already popular dating app. Our focus was on using the VQE as a metaphorical approach to select "yes" or "no" to certain personality criteria while implementing an interactive way about constructing an effective ansatz. If your approximation is good enough to the ground state of the matrix of that attribute, then you have good "chemistry" with it. Thus, after several approximations (selection criteria), users will have matched with a quantum engineer they are compatible with. Here, famous physicists serve as placeholders for what could be real user profiles of those in the quantum community. 
+Our motivation was to give a "quantum spin" to an already popular dating app. Our focus was on using the VQE as a metaphorical approach to select "yes" or "no" to certain personality criteria while implementing an interactive platform to learn about constructing effective ansatzes. If your approximation is good enough to the ground state of the matrix of that attribute, then you have good "chemistry" with it. Thus, after several approximations (selection criteria), users will have matched with a quantum engineer they are compatible with. Here, famous physicists serve as placeholders for what could be real user profiles of those in the quantum community. 
 
 Our goal is to introduce users to the VQE algorithm by letting them propose simple ansatzs and select a parameter/angle which approximates the ground state of the system. With practice, users should be able to improve their ability to choose ansatz with higher fidelity. 
 
