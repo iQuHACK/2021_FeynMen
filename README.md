@@ -1,5 +1,4 @@
 # QMatch: The Quantum version of your favorite dating app
-(Anyone who is available please sketch out this README!)
 
 ## Abstract
 QMatch is a matchingmaking app that relys on quantum principles (VQE) for matching Quantum Computing Engineers/Scientists with the scientists of their dreams. The questions used for assessing compatibility are directly linked to a random matrix for which users must obtain an accurate enough approximation to match with a profile with the desired attributes. 
@@ -24,3 +23,4 @@ Our goal is to introduce users to the VQE algorithm by letting them propose simp
  * Use real profiles by multiple users that play the game (databases).
  * Introduce a swiping mechanic.
  * Adding parametrized games to implement an easier mode
+ * Implement more questions.
