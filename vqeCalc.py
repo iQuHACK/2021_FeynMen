@@ -29,7 +29,7 @@ def rando_hermitian():
     YY=np.kron(sigmay,sigmay)
     pauli=[II,IZ,IX,IY,ZI,ZZ,ZX,ZY,XI,XZ,XX,XY,YI,YZ,YX,YY]
     tags=['II','IZ','IX','IY','ZI','ZZ','ZX','ZY','XI','XZ','XX','XY','YI','YZ','YX','YY']
-    elements=np.random.rand(16,1)
+    elements=np.random.randint(0,5,size=(16,1))
     general_m=np.zeros((4,4),dtype='complex128')
 
     for i in range(0,len(tags)):
@@ -39,24 +39,41 @@ def rando_hermitian():
         coeff[tags[i]]=elements[i][0]
     return general_m,coeff
 
-
-def ansatz(circuit, theta):
+def ansatz(circuit,ansatzList,theta=3.1415):
     q = circuit.qregs[0]
-    circuit.h(q[0])
-    circuit.cx(q[0], q[1])
-    circuit.rx(theta, q[0])
+    for gate in ansatzList:
+        if gate[0]=='H':
+            p=int(gate[1])
+            circuit.h(q[p])
+        if gate[0]=='C':
+            p0=int(gate[1])
+            p1=int(gate[2])
+            circuit.cx(q[p0], q[p1])
+        if gate[0]=='R':
+            p=int(gate[1])
+            circuit.rx(theta, q[p])
+        if gate[0]=='Y':
+            p=int(gate[1])
+            circuit.rx(theta, q[p])
+        if gate[0]=='Z':
+            p=int(gate[1])
+            circuit.rx(theta, q[p])
+        if gate[0]=='X':
+            p=int(gate[1])
+            circuit.x(q[p])
     return circuit
 
 
 
 
-def two_qubit_vqe(theta, basis):
+
+def two_qubit_vqe(theta, basis,ansatzList):
     q = QuantumRegister(2)
     c = ClassicalRegister(2)
     circuit = QuantumCircuit(q, c)
 
     # implement the ansate in the circuit
-    circuit = ansatz(circuit, theta)
+    circuit = ansatz(circuit,ansatzList,theta)
     # measurement
     if basis == 'ZZ':
         circuit.measure(q, c)
@@ -129,12 +146,12 @@ def two_qubit_vqe(theta, basis):
     return circuit
 
 
-def get_expectation(theta, basis):
+def get_expectation(theta, basis,ansatzList):
     
     if basis == 'II':
         return 1
     else:
-        circuit = two_qubit_vqe(theta, basis)
+        circuit = two_qubit_vqe(theta, basis,ansatzList)
     
     shots = 10000 # Max
     backend = BasicAer.get_backend('qasm_simulator')
@@ -153,11 +170,11 @@ def get_expectation(theta, basis):
         
     return expected_value
 
-def vqe_ground(theta,coeff):
+def vqe_ground(theta,coeff,ansatzList):
     sum_=0
     tags=['II','IZ','IX','IY','ZI','ZZ','ZX','ZY','XI','XZ','XX','XY','YI','YZ','YX','YY']
     for i in tags:
-         sum_+=coeff[i]*get_expectation(theta, i)
+         sum_+=coeff[i]*get_expectation(theta, i,ansatzList)
 
     
     # summing the measurement results    
@@ -165,12 +182,10 @@ def vqe_ground(theta,coeff):
 
 
 
-def  GameOutput():
-    Matriz,coeff=rando_hermitian()
-    print('Input your chosen parameter from 0 to 2 pi')
+def  GameOutput(Matriz,coeff,ansatzList,param=0):
+   # print('Input your chosen parameter from 0 to 2 pi')
     eigen=np.real(np.linalg.eigvals(Matriz))
-    param=input()
-    param=float(param)
-    estimation=vqe_ground(param,coeff)
-    print(estimation,eigen)
-    return estimation,eigen
+    #param=input()
+    #param=float(param)
+    estimation=vqe_ground(param,coeff,ansatzList)
+    return estimation,np.amin(eigen)
