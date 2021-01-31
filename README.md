@@ -10,7 +10,7 @@ With more than 1500 dating apps having been created to date, it is clear that on
 Quantum Computing (QC) is the paradigm that uses Quantum properties applied to computations in order to accelerate them. Among the various algorithms and applications of QC, Varational-Quantum-Eigensolver (VQE) is a quantum/classical hybrid algorithm for estimating the lower and upper bounds from a certain matrix $H$ (the Hamiltonian of the system).
 
 
-##Basic Principles
+## Basic Principles
 In this project, we propose a matchmaking application where each of the questions asked to the user are assigned a random matrix $H$ for which you have to create an ansatz to approximate its ground state. Add more info on VQE...
 
 ## Motivation/goals
