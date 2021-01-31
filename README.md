@@ -25,3 +25,7 @@ Our goal is to introduce users to the VQE algorithm by letting them propose simp
  * Adding parametrized games to implement an easier mode
  * Implement more questions.
  * Utilize more qubits and increase ansatz complexity for more advanced users. 
+
+## How to run this game
+
+Just run main_new.py and enjoy the fun!
