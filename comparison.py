@@ -1,4 +1,6 @@
-from vqeCalc2 import *
+from vqeCalc import GameOutput,rando_hermitian
+from qiskit import *
+import numpy as np
 
 
 
@@ -10,13 +12,11 @@ I'm using this one instead of the General one just because I know which
 parameters are good so I can test
 
 '''
-def comparison(ansatz,param=0):
-    print('param')
-    param=float(param)
-    estimate=vqe_ground(param,ansatz)
-    ground=np.amin(Eigenvals())
+def comparison(ansatz,Matriz,coeff,param=0):
 
-    print(estimate,ground)
+
+    estimate,ground=GameOutput(Matriz,coeff,ansatz)
+
     error=(np.abs(estimate-ground))/np.abs(ground)
     print(error)
 

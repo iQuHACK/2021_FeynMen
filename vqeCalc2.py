@@ -28,6 +28,9 @@ def paulidecompos(Matriz):
     coeff={}
     for i in range(len(tags)):
         coeff[tags[i]]=decomposition[elements[i]]
+    atags=['IZ','IX','IY','ZI','ZX','ZY','XI','XZ','XY','YI','YZ','YX']
+    for i in range(len(atags)):
+        coeff[atags[i]]=0
     return coeff
 
 
