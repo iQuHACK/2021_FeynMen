@@ -15,6 +15,33 @@ bg_location = 'gifs/photo-video-detail_0.png'
 
 pygame.init()
 
+# Profiles dictionary by list of properties
+profiles_dict = {
+    "[0,0,0,0]": {
+        "Name": "Albert Einstein",
+        "Age": 35,
+        "Famous for": "Relativity",
+        "Bio": "Relatively attractive."
+    },
+    "[0,0,0,1]": {
+        "Name": "Marie Curie",
+        "Age": 38,
+        "Famous for": "Radiation",
+        "Bio": "A radiant beauty."
+    },
+    "[0,0,1,0]": {
+        "Name": "David Deutsch",
+        "Age": 47,
+        "Famous for": "Father of Quantum Computing",
+        "Bio": "No discrete bits shall describe me."
+    },
+    "[0,0,1,1]": {
+        "Name": "Euler",
+        "Age": 28,
+        "Famous for": "Everything Maths",
+        "Bio": "M is for Maths which belongs to me."
+    },
+}
 
 class Button(object):
     def __init__(self, text, color, x=None, y=None, **kwargs):
@@ -32,8 +59,6 @@ class Button(object):
             self.y = display_height // 2 - self.HEIGHT // 2
         else:
             self.y = y
-    
-
 
     def display(self):
         screen.blit(self.surface, (self.x, self.y))
@@ -121,6 +146,7 @@ def gate_choose():
     CNOT1_button = Button('CX10', WHITE, None, 400,centered_x=True)
     CNOT_button = Button('CX01', WHITE, None, 450,centered_x=True)
     DONE_button = Button('DONE', WHITE, None, 500,centered_x=True)
+    
 
     H_button.display()
     X_button.display()
@@ -132,10 +158,11 @@ def gate_choose():
 
     pygame.display.update()
     while True:
+
         if H_button.check_click(pygame.mouse.get_pos()):
             H_button = Button('H', RED, left, 350)
         else:
-            H_button = Button('H', WHITE,left, 350)
+            H_button = Button('H', WHITE, left, 350)
 
         if X_button.check_click(pygame.mouse.get_pos()):
             X_button = Button('X', RED, left, 400)
@@ -158,22 +185,21 @@ def gate_choose():
         else:
             CNOT1_button = Button('CX10', WHITE, None, 400,centered_x=True)
         if CNOT_button.check_click(pygame.mouse.get_pos()):
-            CNOT_button = Button('CX01', RED, None, 450,centered_x=True)
+            CNOT_button = Button('CX01', RED, None, 450, centered_x=True)
         else:
-            CNOT_button = Button('CX01', WHITE, None, 450,centered_x=True)
+            CNOT_button = Button('CX01', WHITE, None, 450, centered_x=True)
 
         if DONE_button.check_click(pygame.mouse.get_pos()):
-            DONE_button = Button('DONE', RED, None, 500,centered_x=True)
+            DONE_button = Button('DONE', RED, None, 500, centered_x=True)
         else:
-            DONE_button = Button('DONE', WHITE, None, 500,centered_x=True)
-        
+            DONE_button = Button('DONE', WHITE, None, 500, centered_x=True)
+
         H_button.display()
         X_button.display()
-        Z_button.display()
         Y_button.display()
+        Z_button.display()
         CNOT1_button.display()
         CNOT_button.display()
-        DONE_button.display()
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -290,7 +316,7 @@ def yes_screen():
 
 def no_screen():
     screen.blit(bg, (0, 0))
-    game_title = font.render('Unfortunately your circuit got'+ str(round(estimate,2))+ 'and the answer is '+ str(round(ground,2)), True, RED)
+    game_title = font.render('Unfortunately...', True, RED)
     game_title2 = font.render('Now you will enter the field of ...', True, RED)
 
     screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 150))
@@ -323,6 +349,7 @@ def no_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 raise SystemExit
+
         if pygame.mouse.get_pressed()[0]:
             if continue_button.check_click(pygame.mouse.get_pos()):
                 return 'continue'
@@ -331,7 +358,54 @@ def no_screen():
                 return 'exit'
                 break
 
+def match_screen():
+    screen.fill((0, 0, 0))
+    screen.blit(bg, (0, 0))
+    #circuit.draw('mpl', filename='gifs/currentcircuit.png')
+    img = pygame.image.load('profiles/einstein.jpg')
+    img = pygame.transform.scale(img, (200, 300))
+    screen.blit(img, (display_width // 2 - 200 // 2, 20))
 
+    pygame.display.update()  # update the display
+    game_title = font.render('It\'s a match', True, WHITE)
+
+    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 400))
+    DONE_button = Button('Found Love!', WHITE, 100, 500)
+    REPEAT_button = Button('Match Again!', WHITE, 600, 500)
+
+    DONE_button.display()
+    REPEAT_button.display()
+
+    pygame.display.update()
+    while True:
+        if DONE_button.check_click(pygame.mouse.get_pos()):
+            DONE_button = Button('Found Love!', RED, 100, 500)
+        else:
+            DONE_button = Button('Found Love!', WHITE, 100, 500)
+            
+        if REPEAT_button.check_click(pygame.mouse.get_pos()):
+            REPEAT_button = Button('Match Again!', RED, 600, 500)
+        else:
+            REPEAT_button = Button('Match Again!', WHITE, 600, 500)
+
+        DONE_button.display()
+        REPEAT_button.display()
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+                
+        if pygame.mouse.get_pressed()[0]:
+            if REPEAT_button.check_click(pygame.mouse.get_pos()):
+                return 'continue'
+                break
+            if DONE_button.check_click(pygame.mouse.get_pos()):
+                return 'exit'
+                break
+                
+    
 while True:
     matriz, coeff = rando_hermitian()
     #matriz = sp.Matrix([[1, 0, 0, 0], [0, 0, -1, 0], [0, -1, 0, 0], [0, 0, 0, 1]])
@@ -374,7 +448,7 @@ while True:
                 qubit_chosen = qubit_choose()
                 choice.append(gate_chosen + qubit_chosen)
                 circuit.h(int(qubit_chosen))
-                continue
+                continue 
             if gate_chosen[0] == 'X':
                 qubit_chosen = qubit_choose()
                 choice.append(gate_chosen + qubit_chosen)
@@ -390,16 +464,19 @@ while True:
                 choice.append(gate_chosen + qubit_chosen)
                 circuit.z(int(qubit_chosen))
                 continue
+
             if gate_chosen == 'DONE':
                 value,estimate,ground = comparison(choice, matriz, coeff)
+                print(value)
+                
                 if value:
                     print('Go to yes screen')
-                    continueornot = yes_screen()
+                    continueornot = match_screen()
                     time.sleep(0.5)
                     break
                 else:
                     print('Go to no screen')
-                    continueornot = no_screen()
+                    continueornot = match_screen()
                     time.sleep(0.5)
                     break
             time.sleep(0.5)
