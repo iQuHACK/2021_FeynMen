@@ -44,9 +44,9 @@ profiles_dict = {
 }
 
 QUES = {
-    0: "question zero",
-    1: "question one",
-    2: "question two",
+    0: "Is Schrödinger's cat dead?",
+    1: "Many worlds or Copenhagen ?",
+    2: "Qubits or Qudits?",
 }
 
 matched_scientists = {
@@ -93,7 +93,7 @@ class Button(object):
 def starting_screen():
     screen.blit(bg, (0, 0))
 
-    game_title = font.render('Let\'s FeynMen This!', True, RED)
+    game_title = font.render('QMatch', True, RED)
     question = font.render(QUES[n], True, RED)
 
     screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 50))
@@ -287,10 +287,19 @@ def qubit_choose():
 
 def yes_screen():
     screen.blit(bg, (0, 0))
-    game_title = font.render('You Got It! Congratulations!', True, RED)
-    game_title2 = font.render('Now you successfully enter the field of ...', True, RED)
+
+    if(record=='1'):
+        game_title = font.render('Your match prefers the dead cat', True, RED)
+    if(record=='11' or record=='01'):
+        game_title = font.render('Your match thinks the wave function is just math', True, RED)
+    if(record=='011' or record=='101'or record=='111' or record=='001'):
+        game_title = font.render('Your match prefers Qudits', True, RED)
+
+    results = font.render('You Got '+str(round(estimate,2))+' Real Value: '+str(round(ground,2)), True, RED)
+    game_title2 = font.render('The next question is ...', True, RED)
 
     screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 150))
+    screen.blit(results, (display_width // 2 - results.get_width() // 2, 200))
     screen.blit(game_title2, (display_width // 2 - game_title2.get_width() // 2, 250))
 
     continue_button = Button('CONTINUE', WHITE, None, 350, centered_x=True)
@@ -330,10 +339,20 @@ def yes_screen():
 
 def no_screen():
     screen.blit(bg, (0, 0))
-    game_title = font.render('Unfortunately...', True, RED)
-    game_title2 = font.render('Now you will enter the field of ...', True, RED)
+
+    if(record=='0'):
+        game_title = font.render('Your match prefers the dead cat', True, RED)
+    if(record=='00' or record=='10'):
+        game_title = font.render('Your match thinks the wave function is just math', True, RED)
+    if(record=='010' or record=='100'or record=='110' or record=='000'):
+        game_title = font.render('Your match prefers Qudits', True, RED)
+
+
+    results = font.render('You Got '+str(round(estimate,2))+' Real Value: '+str(round(ground,2)), True, RED)
+    game_title2 = font.render('Now The next question is...', True, RED)
 
     screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 150))
+    screen.blit(results, (display_width // 2 - results.get_width() // 2, 200))
     screen.blit(game_title2, (display_width // 2 - game_title2.get_width() // 2, 250))
 
     continue_button = Button('CONTINUE', WHITE, None, 350, centered_x=True)

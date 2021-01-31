@@ -21,7 +21,7 @@ def comparison(ansatz,Matriz,coeff,param=0):
     print(estimate,ground,error)
 
 
-    if error<0.6:
+    if error<0.8:
         print('Good Estimate')
         return True,estimate,ground
     else:
