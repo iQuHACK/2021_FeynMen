@@ -5,7 +5,7 @@
 Dating Matching App using quantum principles (VQE) for matching/unmatching Quantum Computing Engineers/Scientists with the scientists of their dreams. Each of the questions for matching are directly linked to a random matrix for which you have to obtain a good enough approximation to obtain a profile with the attributes you want.
 
 ## Introduction
-With more than 1500 dating apps having been created to date, it is clear that online matchmaking is a huge market with an expansive and diverse user base. For anyone who has used one of these applications, it is clear that there is some ingredient missing in their matchmaking algorithms. That missing ingredient is *Quantum mechanics*. With QMatch, we utilize the power of quantum computing and quantum/classical algorithms to help you find your true *entangled pair*.
+With more than 1500 dating apps having been created to date, it is clear that online matchmaking is a huge market with an expansive and diverse user base. For anyone who has used one of these applications, it is clear that there is some ingredient missing in their matchmaking algorithms. That missing ingredient is *Quantum Mechanics*. With QMatch, we utilize the power of quantum computing and quantum/classical algorithms to help you find your true *entangled pair*.
 
 Quantum Computing (QC) is the paradigm that uses Quantum properties applied to computations in order to accelerate them. Among the various algorithms and applications of QC, Varational-Quantum-Eigensolver (VQE) is a quantum/classical hybrid algorithm for estimating the lower and upper bounds from a certain matrix $H$ (the Hamiltonian of the system).
 
