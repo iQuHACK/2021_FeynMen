@@ -29,7 +29,7 @@ def rando_hermitian():
     YY=np.kron(sigmay,sigmay)
     pauli=[II,IZ,IX,IY,ZI,ZZ,ZX,ZY,XI,XZ,XX,XY,YI,YZ,YX,YY]
     tags=['II','IZ','IX','IY','ZI','ZZ','ZX','ZY','XI','XZ','XX','XY','YI','YZ','YX','YY']
-    elements=np.random.randint(0,5,size=(16,1))
+    elements=np.random.randint(1,5,size=(16,1))
     general_m=np.zeros((4,4),dtype='complex128')
 
     for i in range(0,len(tags)):

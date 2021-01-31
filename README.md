@@ -1,4 +1,4 @@
-# QTinder: The Quantum version of your favorite dates app
+# QMatch: The Quantum version of your favorite dating app
 (Anyone who is available please sketch out this README!)
 
 ## Abstract
@@ -11,15 +11,15 @@ In this project, we propose a Dating Matching App where each of the questions as
 
 
 ## Motivation/goals
-Our motivation was to give a "quantum spin" to an already popular dating app. Our focus was on using the VQE as a metaphorical way for matching with a specific profile. If your approximation is good enough to the ground state of the matrix of that attribute, then you have good "chemistry" with it. Thus, you will have a partner with that characteristic.
+Our motivation was to give a "quantum spin" to an already popular dating app. Our focus was on using the VQE as a metaphorical approach to select "yes" or "no" to certain personality criteria while implementing an interactive platform to learn about constructing effective ansatzes. If your approximation is good enough to the ground state of the matrix of that attribute, then you have good "chemistry" with it. Thus, after several approximations (selection criteria), users will have matched with a quantum engineer they are compatible with. Here, famous physicists serve as placeholders for what could be real user profiles of those in the quantum community. 
 
-Our goal is to introduce the users to the VQE algorithm by letting them propose simple ansatzs and select a parameter/angle which approximates the ground state of the system. If the user knows about it, he/she could propose ansatzs with higher fidelity.
+Our goal is to introduce users to the VQE algorithm by letting them propose simple ansatzs and select a parameter/angle which approximates the ground state of the system. With practice, users should be able to improve their ability to choose ansatz with higher fidelity. 
 
 ## Description
 
 ## Proposals for future work
 
  * Implement the game with better graphics.
- * Use real profiles by multiple users that play the game (data bases).
+ * Use real profiles by multiple users that play the game (databases).
  * Introduce a swiping mechanic.
  
