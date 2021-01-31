@@ -2,12 +2,11 @@ import time
 import pygame
 from comparison import *
 
+# circuit = QuantumCircuit(2, 2)
+# circuit.barrier()
 
-circuit=QuantumCircuit(2,2)
-circuit.barrier()
-
-display_width = 765
-display_height = 600
+display_width = 1000
+display_height = 700
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -83,18 +82,22 @@ def starting_screen():
                 raise SystemExit
         if pygame.mouse.get_pressed()[0]:
             if play_button.check_click(pygame.mouse.get_pos()):
+                return True
                 break
             if exit_button.check_click(pygame.mouse.get_pos()):
+                return False
                 break
 
-def gate_choose():
-    screen.blit(bg, (0, 0))
-    circuit.draw('mpl',filename='gifs/currentcircuit.png')
-    img=pygame.image.load('gifs/currentcircuit.png') 
-    img = pygame.transform.scale(img, (200, 200))
 
-    screen.blit(img,(300,20))
-    pygame.display.flip() # update the display
+def gate_choose():
+    screen.fill((0, 0, 0))
+    screen.blit(bg, (0, 0))
+    circuit.draw('mpl', filename='gifs/currentcircuit.png')
+    img = pygame.image.load('gifs/currentcircuit.png')
+    img = pygame.transform.scale(img, (400, 200))
+
+    screen.blit(img, ((display_width // 2 - img.get_width() // 2, 20)))
+    pygame.display.update()  # update the display
     game_title = font.render('Which gate would you like to choose?', True, RED)
 
     screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 250))
@@ -154,9 +157,10 @@ def gate_choose():
                 return "DONE"
                 break
 
+
 def qubit_choose():
     screen.blit(bg, (0, 0))
-    game_title = font.render('Which gate would you like to choose?', True, RED)
+    game_title = font.render('Which qubit would you like to apply that gate on?', True, RED)
 
     screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 250))
     zero_button = Button('0', WHITE, None, 350, centered_x=True)
@@ -194,42 +198,142 @@ def qubit_choose():
                 return '1'
                 break
 
-screen = pygame.display.set_mode((display_width, display_height))
-bg = pygame.image.load(bg_location)
-font_addr = pygame.font.get_default_font()
-font = pygame.font.Font(font_addr, 36)
 
-starting_screen()
-choice=[]
+def yes_screen():
+    screen.blit(bg, (0, 0))
+    game_title = font.render('You Got It! Congratulations!', True, RED)
+    game_title2 = font.render('Now you successfully enter the field of ...', True, RED)
+
+    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 150))
+    screen.blit(game_title2, (display_width // 2 - game_title2.get_width() // 2, 250))
+
+    continue_button = Button('CONTINUE', WHITE, None, 350, centered_x=True)
+    exit_button = Button('EXIT', WHITE, None, 400, centered_x=True)
+
+    continue_button.display()
+    exit_button.display()
+
+    pygame.display.update()
+    while True:
+
+        if continue_button.check_click(pygame.mouse.get_pos()):
+            continue_button = Button('CONTINUE', RED, None, 350, centered_x=True)
+        else:
+            continue_button = Button('CONTINUE', WHITE, None, 350, centered_x=True)
+
+        if exit_button.check_click(pygame.mouse.get_pos()):
+            exit_button = Button('EXIT', RED, None, 400, centered_x=True)
+        else:
+            exit_button = Button('EXIT', WHITE, None, 400, centered_x=True)
+
+        continue_button.display()
+        exit_button.display()
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+        if pygame.mouse.get_pressed()[0]:
+            if continue_button.check_click(pygame.mouse.get_pos()):
+                return 'continue'
+                break
+            if exit_button.check_click(pygame.mouse.get_pos()):
+                return 'exit'
+                break
+
+
+def no_screen():
+    screen.blit(bg, (0, 0))
+    game_title = font.render('Unfortunately...', True, RED)
+    game_title2 = font.render('Now you will enter the field of ...', True, RED)
+
+    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 150))
+    screen.blit(game_title2, (display_width // 2 - game_title2.get_width() // 2, 250))
+
+    continue_button = Button('CONTINUE', WHITE, None, 350, centered_x=True)
+    exit_button = Button('EXIT', WHITE, None, 400, centered_x=True)
+
+    continue_button.display()
+    exit_button.display()
+
+    pygame.display.update()
+    while True:
+
+        if continue_button.check_click(pygame.mouse.get_pos()):
+            continue_button = Button('CONTINUE', RED, None, 350, centered_x=True)
+        else:
+            continue_button = Button('CONTINUE', WHITE, None, 350, centered_x=True)
+
+        if exit_button.check_click(pygame.mouse.get_pos()):
+            exit_button = Button('EXIT', RED, None, 400, centered_x=True)
+        else:
+            exit_button = Button('EXIT', WHITE, None, 400, centered_x=True)
+
+        continue_button.display()
+        exit_button.display()
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+        if pygame.mouse.get_pressed()[0]:
+            if continue_button.check_click(pygame.mouse.get_pos()):
+                return 'continue'
+                break
+            if exit_button.check_click(pygame.mouse.get_pos()):
+                return 'exit'
+                break
+
 
 while True:
-    gate_chosen=gate_choose()
+    circuit = QuantumCircuit(2, 2)
+    circuit.barrier()
+
+    screen = pygame.display.set_mode((display_width, display_height))
+    bg = pygame.image.load(bg_location)
+    bg = pygame.transform.scale(bg, (1000, 700))
+    font_addr = pygame.font.get_default_font()
+    font = pygame.font.Font(font_addr, 36)
+
+    playornot = starting_screen()
     time.sleep(0.5)
-    if gate_chosen=='C01':
-        choice.append(gate_chosen)
-        circuit.cnot(0,1)
-        continue
-    if gate_chosen[0]=='H':
-        qubit_chosen=qubit_choose()
-        choice.append(gate_chosen+qubit_chosen)
-        circuit.h(int(qubit_chosen))
-        continue
-    if gate_chosen[0]=='X':
-        qubit_chosen=qubit_choose()
-        choice.append(gate_chosen+qubit_chosen)
-        circuit.x(int(qubit_chosen))
-        continue
-    
-    if gate_chosen=='DONE':
-        value=comparison(choice)
-        if value:
-            print('Go to yes screen')
-        else:
-            print('Go to no screen')
+    if playornot:
+        choice = []
+
+        while True:
+            gate_chosen = gate_choose()
+            time.sleep(0.5)
+            if gate_chosen == 'C01':
+                choice.append(gate_chosen)
+                circuit.cnot(0, 1)
+                continue
+            if gate_chosen[0] == 'H':
+                qubit_chosen = qubit_choose()
+                choice.append(gate_chosen + qubit_chosen)
+                circuit.h(int(qubit_chosen))
+                continue
+            if gate_chosen[0] == 'X':
+                qubit_chosen = qubit_choose()
+                choice.append(gate_chosen + qubit_chosen)
+                circuit.x(int(qubit_chosen))
+                continue
+
+            if gate_chosen == 'DONE':
+                value = comparison(choice)
+                if value:
+                    print('Go to yes screen')
+                    continueornot = yes_screen()
+                    time.sleep(0.5)
+                    break
+                else:
+                    print('Go to no screen')
+                    continueornot = no_screen()
+                    time.sleep(0.5)
+                    break
+            time.sleep(0.5)
+        if continueornot == 'exit':
+            break
+    else:
         break
-
-    time.sleep(0.5)
-
-    print(choice,a)
-
-
