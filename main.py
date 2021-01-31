@@ -15,6 +15,33 @@ bg_location = 'gifs/photo-video-detail_0.png'
 
 pygame.init()
 
+# Profiles dictionary by list of properties
+profiles_dict = {
+    "[0,0,0,0]": {
+        "Name": "Albert Einstein",
+        "Age": 35,
+        "Famous for": "Relativity",
+        "Bio": "Relatively attractive."
+    },
+    "[0,0,0,1]": {
+        "Name": "Marie Curie",
+        "Age": 38,
+        "Famous for": "Radiation",
+        "Bio": "A radiant beauty."
+    },
+    "[0,0,1,0]": {
+        "Name": "David Deutsch",
+        "Age": 47,
+        "Famous for": "Father of Quantum Computing",
+        "Bio": "No discrete bits shall describe me."
+    },
+    "[0,0,1,1]": {
+        "Name": "Euler",
+        "Age": 28,
+        "Famous for": "Everything Maths",
+        "Bio": "M is for Maths which belongs to me."
+    },
+}
 
 class Button(object):
     def __init__(self, text, color, x=None, y=None, **kwargs):
@@ -287,6 +314,7 @@ def no_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 raise SystemExit
+
         if pygame.mouse.get_pressed()[0]:
             if continue_button.check_click(pygame.mouse.get_pos()):
                 return 'continue'
@@ -295,7 +323,54 @@ def no_screen():
                 return 'exit'
                 break
 
+def match_screen():
+    screen.fill((0, 0, 0))
+    screen.blit(bg, (0, 0))
+    #circuit.draw('mpl', filename='gifs/currentcircuit.png')
+    img = pygame.image.load('profiles/einstein.jpg')
+    img = pygame.transform.scale(img, (200, 300))
+    screen.blit(img, (display_width // 2 - 200 // 2, 20))
 
+    pygame.display.update()  # update the display
+    game_title = font.render('It\'s a match', True, WHITE)
+
+    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 400))
+    DONE_button = Button('Found Love!', WHITE, 100, 500)
+    REPEAT_button = Button('Match Again!', WHITE, 600, 500)
+
+    DONE_button.display()
+    REPEAT_button.display()
+
+    pygame.display.update()
+    while True:
+        if DONE_button.check_click(pygame.mouse.get_pos()):
+            DONE_button = Button('Found Love!', RED, 100, 500)
+        else:
+            DONE_button = Button('Found Love!', WHITE, 100, 500)
+            
+        if REPEAT_button.check_click(pygame.mouse.get_pos()):
+            REPEAT_button = Button('Match Again!', RED, 600, 500)
+        else:
+            REPEAT_button = Button('Match Again!', WHITE, 600, 500)
+
+        DONE_button.display()
+        REPEAT_button.display()
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+                
+        if pygame.mouse.get_pressed()[0]:
+            if REPEAT_button.check_click(pygame.mouse.get_pos()):
+                return 'continue'
+                break
+            if DONE_button.check_click(pygame.mouse.get_pos()):
+                return 'exit'
+                break
+                
+    
 while True:
     matriz, coeff = rando_hermitian()
     #matriz = sp.Matrix([[1, 0, 0, 0], [0, 0, -1, 0], [0, -1, 0, 0], [0, 0, 0, 1]])
@@ -345,12 +420,12 @@ while True:
                 value = comparison(choice, matriz, coeff)
                 if value:
                     print('Go to yes screen')
-                    continueornot = yes_screen()
+                    continueornot = match_screen()
                     time.sleep(0.5)
                     break
                 else:
                     print('Go to no screen')
-                    continueornot = no_screen()
+                    continueornot = match_screen()
                     time.sleep(0.5)
                     break
             time.sleep(0.5)
