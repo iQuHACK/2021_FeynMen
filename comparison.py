@@ -18,10 +18,10 @@ def comparison(ansatz,Matriz,coeff,param=0):
     estimate,ground=GameOutput(Matriz,coeff,ansatz)
 
     error=(np.abs(estimate-ground))/np.abs(ground)
-    print(error)
+    print(estimate,ground,error)
 
 
-    if error<0.5:
+    if error<0.6:
         print('Good Estimate')
         return True
     else:

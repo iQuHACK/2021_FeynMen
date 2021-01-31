@@ -99,7 +99,8 @@ def gate_choose():
     screen.blit(img, ((display_width // 2 - img.get_width() // 2, 20)))
     pygame.display.update()  # update the display
     game_title = font.render('Which gate would you like to choose?', True, RED)
-
+    matrixText = fontMatrix.render(showMatrix, True, RED)
+    screen.blit(matrixText, (display_width // 2 - matrixText.get_width() // 2, 650))
     screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 250))
     H_button = Button('H', WHITE, None, 350, centered_x=True)
     X_button = Button('X', WHITE, None, 400, centered_x=True)
@@ -289,18 +290,18 @@ def no_screen():
 
 while True:
     matriz, coeff = rando_hermitian()
-    Matriz = sp.Matrix([[1, 0, 0, 0], [0, 0, -1, 0], [0, -1, 0, 0], [0, 0, 0, 1]])
-    coeff = paulidecompos(Matriz)
-    Matriz = np.array(Matriz).astype(np.float64)
-
+    #matriz = sp.Matrix([[1, 0, 0, 0], [0, 0, -1, 0], [0, -1, 0, 0], [0, 0, 0, 1]])
+    #coeff = paulidecompos(matriz)
+    #matriz = np.array(matriz).astype(np.float64)
+    showMatrix=np.array_str(matriz)
     circuit = QuantumCircuit(2, 2)
     circuit.barrier()
-
     screen = pygame.display.set_mode((display_width, display_height))
     bg = pygame.image.load(bg_location)
     bg = pygame.transform.scale(bg, (1000, 700))
     font_addr = pygame.font.get_default_font()
     font = pygame.font.Font(font_addr, 36)
+    fontMatrix = pygame.font.Font(font_addr, 18)
 
     playornot = starting_screen()
     time.sleep(0.5)
@@ -326,7 +327,7 @@ while True:
                 continue
 
             if gate_chosen == 'DONE':
-                value = comparison(choice, Matriz, coeff)
+                value = comparison(choice, matriz, coeff)
                 if value:
                     print('Go to yes screen')
                     continueornot = yes_screen()
