@@ -1,4 +1,4 @@
-# Thank you for deleting
+# Thank you for deleting the file
 
 import time
 import pygame
