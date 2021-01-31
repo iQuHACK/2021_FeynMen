@@ -212,9 +212,9 @@ def starting_screen():
 
     screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 100))
 
-    img = pygame.image.load('currentmatrix.png')
-    img = pygame.transform.scale(img, (500, 200))
-    screen.blit(img, ((display_width // 2 - img.get_width() // 2, 200)))
+    #img = pygame.image.load('currentmatrix.png')
+    #img = pygame.transform.scale(img, (500, 200))
+    #screen.blit(img, ((display_width // 2 - img.get_width() // 2, 200)))
 
 
     play_button = Button('Play', RED, None, 500, centered_x=True)
@@ -310,6 +310,7 @@ def gate_choose(question):
         H_button.display()
         X_button.display()
         CNOT_button.display()
+        DONE_button.display()
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -530,9 +531,9 @@ while True:
     showMatrix= np.array_str(matriz[0]) + '\n' +np.array_str(matriz[1])+ '\n' +np.array_str(matriz[2])+ '\n' +np.array_str(matriz[3])
     im = Image.new("RGB", (270, 100), (255, 255, 255))
     dr = ImageDraw.Draw(im)
-    font = font = ImageFont.load_default()
+    imfont = ImageFont.load_default()
 
-    dr.text((20, 20), showMatrix, font=font, fill="#000000")
+    dr.text((20, 20), showMatrix, font=imfont, fill="#000000")
     im.save("currentmatrix.png")
 
     circuit = QuantumCircuit(2, 2)
@@ -591,6 +592,20 @@ while True:
                     #break
                     #continue
                 flag += 1
+                
+                # New matrix every attribute
+                
+                matriz, coeff = rando_hermitian()
+                showMatrix= np.array_str(matriz[0]) + '\n' +np.array_str(matriz[1])+ '\n' +np.array_str(matriz[2])+ '\n' +np.array_str(matriz[3])
+                im = Image.new("RGB", (270, 100), (255, 255, 255))
+                dr = ImageDraw.Draw(im)
+                #font = ImageFont.load_default()
+
+                dr.text((20, 20), showMatrix, font=imfont, fill="#000000")
+                im.save("currentmatrix.png")
+                
+                # New circuit every attribute
+                
                 circuit = QuantumCircuit(2, 2)
                 circuit.barrier()
                 if flag == 4:
