@@ -1,8 +1,13 @@
 import time
 import pygame
+from comparison import *
+
+
+circuit=QuantumCircuit(2,2)
+circuit.barrier()
 
 display_width = 765
-display_height = 450
+display_height = 600
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -84,13 +89,19 @@ def starting_screen():
 
 def gate_choose():
     screen.blit(bg, (0, 0))
+    circuit.draw('mpl',filename='gifs/currentcircuit.png')
+    img=pygame.image.load('gifs/currentcircuit.png') 
+    img = pygame.transform.scale(img, (200, 200))
+
+    screen.blit(img,(300,20))
+    pygame.display.flip() # update the display
     game_title = font.render('Which gate would you like to choose?', True, RED)
 
-    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 100))
-    H_button = Button('H', WHITE, None, 150, centered_x=True)
-    X_button = Button('X', WHITE, None, 200, centered_x=True)
-    CNOT_button = Button('CNOT01', WHITE, None, 250, centered_x=True)
-    DONE_button = Button('DONE', WHITE, None, 300, centered_x=True)
+    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 250))
+    H_button = Button('H', WHITE, None, 350, centered_x=True)
+    X_button = Button('X', WHITE, None, 400, centered_x=True)
+    CNOT_button = Button('CNOT01', WHITE, None, 450, centered_x=True)
+    DONE_button = Button('DONE', WHITE, None, 500, centered_x=True)
 
     H_button.display()
     X_button.display()
@@ -101,24 +112,24 @@ def gate_choose():
     while True:
 
         if H_button.check_click(pygame.mouse.get_pos()):
-            H_button = Button('H', RED, None, 150, centered_x=True)
+            H_button = Button('H', RED, None, 350, centered_x=True)
         else:
-            H_button = Button('H', WHITE, None, 150, centered_x=True)
+            H_button = Button('H', WHITE, None, 350, centered_x=True)
 
         if X_button.check_click(pygame.mouse.get_pos()):
-            X_button = Button('X', RED, None, 200, centered_x=True)
+            X_button = Button('X', RED, None, 400, centered_x=True)
         else:
-            X_button = Button('X', WHITE, None, 200, centered_x=True)
+            X_button = Button('X', WHITE, None, 400, centered_x=True)
 
         if CNOT_button.check_click(pygame.mouse.get_pos()):
-            CNOT_button = Button('CNOT01', RED, None, 250, centered_x=True)
+            CNOT_button = Button('CNOT01', RED, None, 450, centered_x=True)
         else:
-            CNOT_button = Button('CNOT01', WHITE, None, 250, centered_x=True)
+            CNOT_button = Button('CNOT01', WHITE, None, 450, centered_x=True)
 
         if DONE_button.check_click(pygame.mouse.get_pos()):
-            DONE_button = Button('DONE', RED, None, 300, centered_x=True)
+            DONE_button = Button('DONE', RED, None, 500, centered_x=True)
         else:
-            DONE_button = Button('DONE', WHITE, None, 300, centered_x=True)
+            DONE_button = Button('DONE', WHITE, None, 500, centered_x=True)
 
         H_button.display()
         X_button.display()
@@ -137,7 +148,7 @@ def gate_choose():
                 return "X"
                 break
             if CNOT_button.check_click(pygame.mouse.get_pos()):
-                return "CNOT01"
+                return "C01"
                 break
             if DONE_button.check_click(pygame.mouse.get_pos()):
                 return "DONE"
@@ -147,9 +158,9 @@ def qubit_choose():
     screen.blit(bg, (0, 0))
     game_title = font.render('Which gate would you like to choose?', True, RED)
 
-    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 100))
-    zero_button = Button('0', WHITE, None, 150, centered_x=True)
-    one_button = Button('1', WHITE, None, 200, centered_x=True)
+    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 250))
+    zero_button = Button('0', WHITE, None, 350, centered_x=True)
+    one_button = Button('1', WHITE, None, 400, centered_x=True)
 
     zero_button.display()
     one_button.display()
@@ -158,14 +169,14 @@ def qubit_choose():
     while True:
 
         if zero_button.check_click(pygame.mouse.get_pos()):
-            zero_button = Button('0', RED, None, 150, centered_x=True)
+            zero_button = Button('0', RED, None, 350, centered_x=True)
         else:
-            zero_button = Button('0', WHITE, None, 150, centered_x=True)
+            zero_button = Button('0', WHITE, None, 350, centered_x=True)
 
         if one_button.check_click(pygame.mouse.get_pos()):
-            one_button = Button('1', RED, None, 200, centered_x=True)
+            one_button = Button('1', RED, None, 400, centered_x=True)
         else:
-            one_button = Button('1', WHITE, None, 200, centered_x=True)
+            one_button = Button('1', WHITE, None, 400, centered_x=True)
 
         zero_button.display()
         one_button.display()
@@ -190,18 +201,35 @@ font = pygame.font.Font(font_addr, 36)
 
 starting_screen()
 choice=[]
+
 while True:
     gate_chosen=gate_choose()
     time.sleep(0.5)
-    if gate_chosen=='CNOT01':
+    if gate_chosen=='C01':
         choice.append(gate_chosen)
-        print(choice)
+        circuit.cnot(0,1)
         continue
+    if gate_chosen[0]=='H':
+        qubit_chosen=qubit_choose()
+        choice.append(gate_chosen+qubit_chosen)
+        circuit.h(int(qubit_chosen))
+        continue
+    if gate_chosen[0]=='X':
+        qubit_chosen=qubit_choose()
+        choice.append(gate_chosen+qubit_chosen)
+        circuit.x(int(qubit_chosen))
+        continue
+    
     if gate_chosen=='DONE':
+        value=comparison(choice)
+        if value:
+            print('Go to yes screen')
+        else:
+            print('Go to no screen')
         break
-    qubit_chosen=qubit_choose()
+
     time.sleep(0.5)
-    choice.append(gate_chosen+qubit_chosen)
-    print(choice)
+
+    print(choice,a)
 
 

@@ -10,9 +10,8 @@ I'm using this one instead of the General one just because I know which
 parameters are good so I can test
 
 '''
-def comparison(ansatz):
+def comparison(ansatz,param=0):
     print('param')
-    param=input()
     param=float(param)
     estimate=vqe_ground(param,ansatz)
     ground=np.amin(Eigenvals())

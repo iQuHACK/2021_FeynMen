@@ -37,7 +37,7 @@ coeff=paulidecompos(Matriz)
 def Eigenvals():
     return np.linalg.eigvals(np.array(Matriz).astype(np.float64))
 
-def ansatz(circuit, theta,ansatzList):
+def ansatz(circuit,ansatzList,theta=3.1415):
     q = circuit.qregs[0]
     for gate in ansatzList:
         if gate[0]=='H':
@@ -58,7 +58,7 @@ def ansatz(circuit, theta,ansatzList):
             circuit.rx(theta, q[p])
         if gate[0]=='X':
             p=int(gate[1])
-            circuit.rx(theta, q[p])
+            circuit.x(q[p])
     return circuit
 
 def two_qubit_vqe(theta, basis,ansatzList):
@@ -67,7 +67,7 @@ def two_qubit_vqe(theta, basis,ansatzList):
     circuit = QuantumCircuit(q, c)
 
     # implement the ansate in the circuit
-    circuit = ansatz(circuit, theta,ansatzList)
+    circuit = ansatz(circuit,ansatzList,theta)
     # measurement
     if basis == 'Z':
         circuit.measure(q, c)
