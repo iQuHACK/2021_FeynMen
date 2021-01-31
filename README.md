@@ -10,7 +10,7 @@ Quantum Computing (QC) is the paradigm that uses Quantum properties applied to c
 
 
 ## Basic Principles
-In this project, we propose a matchmaking application where each of the questions asked to the user are assigned a random matrix $H$ for which you have to create an ansatz to approximate its ground state. We arrange for an error bound to decide whether the estimation is good or bad. Add more info on VQE...
+In this project, we propose a matchmaking application where each of the questions asked to the user are assigned a random matrix $H$ for which you have to create an ansatz to approximate its ground state. We arrange for an error bound to decide whether the estimation is good or bad.
 
 ## Motivation/goals
 Our motivation was to give a "quantum spin" to an already popular dating app. Our focus was on using the VQE as a metaphorical approach to select "yes" or "no" to certain personality criteria while implementing an interactive platform to learn about constructing effective ansatzes. If your approximation is within a margin of error relative to the ground state of the matrix of that attribute, then you succesfully select that attribute. Thus, after several approximations (selection criteria), users will have matched with a quantum engineer they are compatible with. Here, famous physicists serve as placeholders for what could be real user profiles of those in the quantum community. 
