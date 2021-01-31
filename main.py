@@ -43,6 +43,24 @@ profiles_dict = {
     },
 }
 
+QUES = {
+    0: "question zero",
+    1: "question one",
+    2: "question two",
+}
+
+matched_scientists = {
+    [0, 0, 0]: 'profiles/einstein.jpg',
+    [0, 0, 1]: 'profiles/curie.jpg',
+    [0, 1, 0]: 'profiles/euler.jpg',
+    [0, 1, 1]: 'profiles/gauses.jpg',
+    [1, 0, 0]: 'profiles/einstein.jpg',
+    [1, 0, 1]: 'profiles/lamarr.jpg',
+    [1, 1, 0]: 'profiles/schrodinger.jpg',
+    [1, 1, 1]: 'profiles/shor.jpg',
+}
+
+
 class Button(object):
     def __init__(self, text, color, x=None, y=None, **kwargs):
         self.surface = font.render(text, True, color)
@@ -77,13 +95,14 @@ def starting_screen():
     screen.blit(bg, (0, 0))
 
     game_title = font.render('Let\'s FeynMen This!', True, RED)
+    question = font.render(QUES[n], True, RED)
 
-    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 100))
+    screen.blit(game_title, (display_width // 2 - game_title.get_width() // 2, 50))
+    screen.blit(question, (display_width // 2 - question.get_width() // 2, 120))
 
     img = pygame.image.load('currentmatrix.png')
     img = pygame.transform.scale(img, (500, 200))
     screen.blit(img, ((display_width // 2 - img.get_width() // 2, 200)))
-
 
     play_button = Button('Play', RED, None, 500, centered_x=True)
     exit_button = Button('Exit', WHITE, None, 550, centered_x=True)
@@ -323,11 +342,12 @@ def no_screen():
                 return 'exit'
                 break
 
+
 def match_screen():
     screen.fill((0, 0, 0))
     screen.blit(bg, (0, 0))
-    #circuit.draw('mpl', filename='gifs/currentcircuit.png')
-    img = pygame.image.load('profiles/einstein.jpg')
+
+    img = pygame.image.load(matched_scientists[record])
     img = pygame.transform.scale(img, (200, 300))
     screen.blit(img, (display_width // 2 - 200 // 2, 20))
 
@@ -347,7 +367,7 @@ def match_screen():
             DONE_button = Button('Found Love!', RED, 100, 500)
         else:
             DONE_button = Button('Found Love!', WHITE, 100, 500)
-            
+
         if REPEAT_button.check_click(pygame.mouse.get_pos()):
             REPEAT_button = Button('Match Again!', RED, 600, 500)
         else:
@@ -361,7 +381,7 @@ def match_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 raise SystemExit
-                
+
         if pygame.mouse.get_pressed()[0]:
             if REPEAT_button.check_click(pygame.mouse.get_pos()):
                 return 'continue'
@@ -369,14 +389,16 @@ def match_screen():
             if DONE_button.check_click(pygame.mouse.get_pos()):
                 return 'exit'
                 break
-                
-    
-while True:
+
+
+record = []
+for n in [0, 1, 2]:
     matriz, coeff = rando_hermitian()
-    #matriz = sp.Matrix([[1, 0, 0, 0], [0, 0, -1, 0], [0, -1, 0, 0], [0, 0, 0, 1]])
-    #coeff = paulidecompos(matriz)
-    #matriz = np.array(matriz).astype(np.float64)
-    showMatrix= np.array_str(matriz[0]) + '\n' +np.array_str(matriz[1])+ '\n' +np.array_str(matriz[2])+ '\n' +np.array_str(matriz[3])
+    # matriz = sp.Matrix([[1, 0, 0, 0], [0, 0, -1, 0], [0, -1, 0, 0], [0, 0, 0, 1]])
+    # coeff = paulidecompos(matriz)
+    # matriz = np.array(matriz).astype(np.float64)
+    showMatrix = np.array_str(matriz[0]) + '\n' + np.array_str(matriz[1]) + '\n' + np.array_str(
+        matriz[2]) + '\n' + np.array_str(matriz[3])
     im = Image.new("RGB", (270, 100), (255, 255, 255))
     dr = ImageDraw.Draw(im)
     font = font = ImageFont.load_default()
@@ -418,14 +440,15 @@ while True:
 
             if gate_chosen == 'DONE':
                 value = comparison(choice, matriz, coeff)
+                record.append(value)
                 if value:
                     print('Go to yes screen')
-                    continueornot = match_screen()
+                    continueornot = yes_screen()
                     time.sleep(0.5)
                     break
                 else:
                     print('Go to no screen')
-                    continueornot = match_screen()
+                    continueornot = no_screen()
                     time.sleep(0.5)
                     break
             time.sleep(0.5)
@@ -433,3 +456,5 @@ while True:
             break
     else:
         break
+
+match_screen()
