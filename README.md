@@ -29,3 +29,12 @@ Our goal is to introduce users to the VQE algorithm by letting them propose simp
 ## How to run this game
 
 Just run main_new.py and enjoy the fun!
+
+## Instructions/Flow
+ The overall flow of the game is:
+
+  1. Start the game.
+  2. Answer each question by proposing an ansatz and its parameters.
+  3. If your VQE approximation is good enough, you'll be answering "Yes".
+  4. After completing 3 questions, the scientist of your dreams will be paired with you.
+  5. Repeat cycle or exit the game.
